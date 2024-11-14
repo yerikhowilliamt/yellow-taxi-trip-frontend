@@ -1,4 +1,4 @@
-# Yellow Taxi Trip - Frontend
+# Yellow Taxi analytics dashboard
 
 Ini adalah frontend dari proyek **Yellow Taxi Trip**, yang dibangun menggunakan **Next.js**, dengan berbagai library untuk meningkatkan UI/UX dan fungsionalitas aplikasi.
 
