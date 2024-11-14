@@ -4,7 +4,7 @@ import axios from 'axios';
 export async function GET() {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/yellow-taxi-trips`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/yellow-taxi-trips?page=1&limit=10`
     );
 
     if (response.status !== 200) {
