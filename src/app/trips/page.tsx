@@ -3,10 +3,11 @@
 import React, { useEffect, useState } from 'react';
 import { Trip } from '../../types/trips';
 import Filters from '@/components/filters';
-import MapComponent from '@/components/map';
 import TripList from '@/components/tripList';
 import { fetchTrips } from '../../lib/fetchTrips';
 import dynamic from 'next/dynamic';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 
 interface TripsPageProps {
   initialTrips: Trip[];
@@ -15,8 +16,8 @@ interface TripsPageProps {
 }
 
 const Map = dynamic(() => import('@/components/map'), {
-  ssr: false
-})
+  ssr: false,
+});
 
 const TripsPage: React.FC<TripsPageProps> = ({
   initialTrips,
@@ -98,37 +99,38 @@ const TripsPage: React.FC<TripsPageProps> = ({
   };
 
   return (
-    <div className='p-10 flex flex-col gap-y-10 w-full text-white bg-[#ffab00]'>
-      <h1 className='text-center text-xl md:text-4xl font-semibold'>
+    <div className='p-10 flex flex-col gap-y-10 w-full bg-[#ffab00]'>
+      <h1 className='text-center text-xl md:text-4xl font-semibold text-white'>
         Yellow Taxi Analytics Dashboard
       </h1>
-      <div className='mb-4'>
-        <label>Page: </label>
-        <input
-          type='number'
-          value={page}
-          min={1}
-          onChange={(e) => handlePageChange(Number(e.target.value))}
-          className='border px-2 py-1 text-black'
-        />
-
-        <label className='ml-4'>Limit: </label>
-        <input
-          type='number'
-          value={limit}
-          min={1}
-          onChange={(e) => handleLimitChange(Number(e.target.value))}
-          className='border px-2 py-1 text-black'
-        />
+      <div className='w-full md:max-w-[15rem] space-y-2'>
+        <div className='w-full'>
+          <Label className='text-white font-semibold text-base md:text-lg'>Page : </Label>
+          <Input
+            type='number'
+            value={page}
+            min={1}
+            onChange={(e) => handlePageChange(Number(e.target.value))}
+            className='border px-2 py-1 text-black'
+          />
+        </div>
+        <div className='w-full'>
+          <Label className='text-white font-semibold text-base md:text-lg'>Limit : </Label>
+          <Input
+            type='number'
+            value={limit}
+            min={1}
+            onChange={(e) => handleLimitChange(Number(e.target.value))}
+            className='border px-2 py-1 text-black'
+          />
+        </div>
       </div>
 
       <TripList trips={filteredTrips} />
 
-      <div className='flex flex-col md:flex-row gap-y-10 gap-x-20 justify-center items-center'>
+      <div className='flex flex-col lg:flex-row gap-y-10 gap-x-20 justify-center items-center'>
         <Filters onFilter={handleFilter} />
-        <div className='h-[15rem] md:h-[50rem] w-full'>
-          <Map trips={filteredTrips} />
-        </div>
+        <Map trips={filteredTrips} />
       </div>
     </div>
   );

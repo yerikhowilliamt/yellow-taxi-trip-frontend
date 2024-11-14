@@ -1,12 +1,19 @@
+import axios from 'axios';
+
 export async function fetchTrips(page: number, limit: number) {
   const params = new URLSearchParams({
     page: page.toString(),
     limit: limit.toString(),
   }).toString();
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/yellow-taxi-trips?${params}`, { cache: 'no-store' });
-  if (!res.ok) throw new Error('Failed to fetch trips');
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/yellow-taxi-trips?${params}`
+    );
 
-  const response = await res.json();
-  return Array.isArray(response.data) ? response.data : [];
+    return Array.isArray(response.data.data) ? response.data.data : [];
+  } catch (error) {
+    console.error('Error fetching trips:', error);
+    throw new Error('Failed to fetch trips');
+  }
 }
