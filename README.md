@@ -55,7 +55,7 @@ npm install
 Buat file .env.local di direktori root proyek dan tambahkan variabel lingkungan berikut:
 
 ```
-NEXT_PUBLIC_API_URL=https://url-api-anda.com
+NEXT_PUBLIC_API_URL=https://yellow-taxi-trips.up.railway.app
 ```
 
 ### 4. Jalankan proyek secara lokal
