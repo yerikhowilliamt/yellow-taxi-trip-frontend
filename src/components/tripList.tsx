@@ -13,9 +13,10 @@ import Image from 'next/image';
 
 interface TripListProps {
   trips: Trip[];
+  children: React.ReactNode;
 }
 
-const TripList: React.FC<TripListProps> = ({ trips }) => {
+const TripList: React.FC<TripListProps> = ({ trips, children }) => {
   const [minFare, setMinFare] = useState<number>(0);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -79,7 +80,12 @@ const TripList: React.FC<TripListProps> = ({ trips }) => {
           {filteredTrips.map((trip, index) => (
             <SwiperSlide key={index}>
               <div className='border rounded-md shadow-sm w-full text-white p-4 relative pt-2 pb-6'>
-                <Image src={'/yellow-taxi-city.jpg'} fill alt='image' className='object-cover absolute -z-10 brightness-[30%] border rounded-lg'/>
+                <Image
+                  src={'/yellow-taxi-city.jpg'}
+                  fill
+                  alt='image'
+                  className='object-cover absolute -z-10 brightness-[30%] border rounded-lg'
+                />
                 <div className='flex flex-col py-2 items-center'>
                   <h5 className='font-bold text-sm md:text-lg'>Vendor ID:</h5>
                   <p className='text-sm md:text-base'>{trip.vendor_id}</p>
@@ -89,14 +95,18 @@ const TripList: React.FC<TripListProps> = ({ trips }) => {
                   <p className='text-sm md:text-base'>${trip.fare_amount}</p>
                 </div>
                 <div className='flex flex-col py-2 items-center'>
-                  <h5 className='font-bold text-sm md:text-lg'>Pickup Location:</h5>
+                  <h5 className='font-bold text-sm md:text-lg'>
+                    Pickup Location:
+                  </h5>
                   <p className='text-sm md:text-base'>
                     {trip.pickup_location.coordinates[1]},{' '}
                     {trip.pickup_location.coordinates[0]}
                   </p>
                 </div>
                 <div className='flex flex-col py-2 items-center'>
-                  <h5 className='font-bold text-sm md:text-lg'>Dropoff Location:</h5>
+                  <h5 className='font-bold text-sm md:text-lg'>
+                    Dropoff Location:
+                  </h5>
                   <p className='text-sm md:text-base'>
                     {trip.dropoff_location.coordinates[1]},{' '}
                     {trip.dropoff_location.coordinates[0]}
@@ -104,21 +114,30 @@ const TripList: React.FC<TripListProps> = ({ trips }) => {
                 </div>
                 <div className='flex flex-col py-2 items-center'>
                   <h5 className='font-bold text-sm md:text-lg'>Distance:</h5>
-                  <p className='text-sm md:text-base'>{trip.trip_distance} miles</p>
+                  <p className='text-sm md:text-base'>
+                    {trip.trip_distance} miles
+                  </p>
                 </div>
                 <div className='flex flex-col py-2 items-center'>
                   <h5 className='font-bold text-sm md:text-lg'>Pickup Time:</h5>
-                  <p className='text-sm md:text-base'>{new Date(trip.pickup_datetime).toLocaleString()}</p>
+                  <p className='text-sm md:text-base'>
+                    {new Date(trip.pickup_datetime).toLocaleString()}
+                  </p>
                 </div>
                 <div className='flex flex-col py-2 items-center'>
-                  <h5 className='font-bold text-sm md:text-lg'>Dropoff Time:</h5>
-                  <p className='text-sm md:text-base'>{new Date(trip.dropoff_datetime).toLocaleString()}</p>
+                  <h5 className='font-bold text-sm md:text-lg'>
+                    Dropoff Time:
+                  </h5>
+                  <p className='text-sm md:text-base'>
+                    {new Date(trip.dropoff_datetime).toLocaleString()}
+                  </p>
                 </div>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
+      {children}
     </div>
   );
 };

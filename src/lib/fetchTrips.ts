@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export async function fetchTrips(page: number, limit: number) {
+export async function fetchTrips(page: number) {
   const params = new URLSearchParams({
     page: page.toString(),
-    limit: limit.toString(),
+    limit: '10',
   }).toString();
 
   try {

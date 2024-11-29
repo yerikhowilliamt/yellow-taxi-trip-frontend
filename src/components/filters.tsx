@@ -41,7 +41,7 @@ const Filters: React.FC<FiltersProps> = ({ onFilter }) => {
         max_distance: maxDistance,
         payment_type: paymentType,
       });
-      toast.success('Success applying filters.')
+      toast.success('Success applying filters.');
     } catch (error) {
       console.error('Error applying filters:', error);
       toast.error('Error applying filters.');
@@ -160,7 +160,7 @@ const Filters: React.FC<FiltersProps> = ({ onFilter }) => {
         </div>
         <Button
           type='submit'
-          className='p-2 bg-blue-700 text-white rounded w-full mt-6 hover:bg-[#038a18]'
+          className='p-2 bg-blue-700 text-white rounded w-full mt-6 hover:bg-[#038a18] transition-colors duration-700 ease-in-out'
           disabled={loading}
         >
           {loading === false ? 'Apply Filters' : 'Loading...'}

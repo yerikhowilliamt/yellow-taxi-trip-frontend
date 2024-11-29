@@ -6,8 +6,8 @@ import Filters from '@/components/filters';
 import TripList from '@/components/tripList';
 import { fetchTrips } from '../../lib/fetchTrips';
 import dynamic from 'next/dynamic';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import PaginationButton from '@/components/ui/pagination-button';
 
 interface TripsPageProps {
   initialTrips: Trip[];
@@ -19,20 +19,15 @@ const Map = dynamic(() => import('@/components/map'), {
   ssr: false,
 });
 
-const TripsPage: React.FC<TripsPageProps> = ({
-  initialTrips,
-  initialPage,
-  initialLimit,
-}) => {
+const TripsPage: React.FC<TripsPageProps> = ({ initialTrips, initialPage }) => {
   const [fetchedTrips, setFetchedTrips] = useState<Trip[]>(initialTrips);
   const [filteredTrips, setFilteredTrips] = useState<Trip[]>(initialTrips);
   const [page, setPage] = useState(initialPage);
-  const [limit, setLimit] = useState(initialLimit);
 
   useEffect(() => {
     const getTrips = async () => {
       try {
-        const tripsData = await fetchTrips(page, limit);
+        const tripsData = await fetchTrips(page);
         setFetchedTrips(tripsData);
         setFilteredTrips(tripsData);
       } catch (error) {
@@ -41,15 +36,10 @@ const TripsPage: React.FC<TripsPageProps> = ({
     };
 
     getTrips();
-  }, [page, limit]);
+  }, [page]);
 
-  const handlePageChange = (newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleLimitChange = (newLimit: number) => {
-    setLimit(newLimit);
-  };
+  const incrementPage = () => setPage((prev) => prev + 1);
+  const decrementPage = () => setPage((prev) => Math.max(prev - 1, 1));
 
   const handleFilter = (filters: {
     start_date_time: string | null;
@@ -99,34 +89,18 @@ const TripsPage: React.FC<TripsPageProps> = ({
   };
 
   return (
-    <div className='p-10 flex flex-col gap-y-10 w-full bg-[#ffab00]'>
-      <h1 className='text-center text-xl md:text-4xl font-semibold text-white'>
-        Yellow Taxi Analytics Dashboard
+    <div className='p-10 flex flex-col gap-y-10 w-full'>
+      <h1 className='text-center text-xl md:text-4xl font-semibold'>
+        <span className='text-[#ffa702]'>Yellow Taxi</span> Analytics Dashboard
       </h1>
-      <div className='w-full md:max-w-[15rem] space-y-2'>
-        <div className='w-full'>
-          <Label className='text-white font-semibold text-base md:text-lg'>Page : </Label>
-          <Input
-            type='number'
-            value={page}
-            min={1}
-            onChange={(e) => handlePageChange(Number(e.target.value))}
-            className='border px-2 py-1 text-black'
-          />
-        </div>
-        <div className='w-full'>
-          <Label className='text-white font-semibold text-base md:text-lg'>Limit : </Label>
-          <Input
-            type='number'
-            value={limit}
-            min={1}
-            onChange={(e) => handleLimitChange(Number(e.target.value))}
-            className='border px-2 py-1 text-black'
-          />
-        </div>
-      </div>
 
-      <TripList trips={filteredTrips} />
+      <TripList trips={filteredTrips}>
+        <PaginationButton
+          decrement={decrementPage}
+          increment={incrementPage}
+          page={page}
+        />
+      </TripList>
 
       <div className='flex flex-col lg:flex-row gap-y-10 gap-x-20 justify-center items-center'>
         <Filters onFilter={handleFilter} />
