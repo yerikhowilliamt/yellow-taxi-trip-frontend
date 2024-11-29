@@ -6,13 +6,11 @@ import Filters from '@/components/filters';
 import TripList from '@/components/tripList';
 import { fetchTrips } from '../../lib/fetchTrips';
 import dynamic from 'next/dynamic';
-import { Button } from '@/components/ui/button';
 import PaginationButton from '@/components/ui/pagination-button';
 
 interface TripsPageProps {
   initialTrips: Trip[];
   initialPage: number;
-  initialLimit: number;
 }
 
 const Map = dynamic(() => import('@/components/map'), {
