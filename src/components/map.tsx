@@ -1,5 +1,5 @@
-import 'leaflet/dist/leaflet.css';
-import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
+'use client'
+
 import L, { LatLngExpression } from 'leaflet';
 import React, { useEffect, useRef, useState } from 'react';
 import {
@@ -11,6 +11,8 @@ import {
   useMap,
 } from 'react-leaflet';
 import { Trip } from '../types/trips';
+import 'leaflet/dist/leaflet.css';
+import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 
 if (typeof window !== 'undefined' && !L.Routing) {
   require('leaflet-routing-machine');
@@ -94,18 +96,6 @@ const MapComponent: React.FC<{ trips: Trip[] }> = ({ trips }) => {
     }
   };
 
-  const mapCenter: LatLngExpression =
-    trips.length > 0
-      ? [
-          (trips[0].pickup_location.coordinates[1] +
-            trips[0].dropoff_location.coordinates[1]) /
-            2,
-          (trips[0].pickup_location.coordinates[0] +
-            trips[0].dropoff_location.coordinates[0]) /
-            2,
-        ]
-      : [40.7128, -74.006];
-
   useEffect(() => {
     if (selectedTrip && routingControlRef.current) {
       const pickupCoordinates: LatLngExpression = [
@@ -125,7 +115,7 @@ const MapComponent: React.FC<{ trips: Trip[] }> = ({ trips }) => {
 
   return (
     <MapContainer
-      center={mapCenter}
+      center={[40.7128, -74.0060]}
       zoom={12}
       scrollWheelZoom={true}
       className='w-full h-[25rem] lg:h-[35rem]'

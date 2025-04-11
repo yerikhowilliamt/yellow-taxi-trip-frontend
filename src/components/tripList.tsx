@@ -10,6 +10,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import { Label } from './ui/label';
 import { Input } from './ui/input';
 import Image from 'next/image';
+import { Skeleton } from './ui/skeleton';
 
 interface TripListProps {
   trips: Trip[];
